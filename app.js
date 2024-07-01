@@ -16,8 +16,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(MainRoute);
-
 const PORT = process.env.SERVER_PORT;
+
+app.use((err, req, res, next) => {
+  return res.status(400).json({
+    message: err.message,
+    code: err.code || "app_error",
+    statusCode: err.statusCode || 400,
+    stack: err.stack,
+  });
+});
 
 app.listen(PORT, async () => {
   await dbInstance.connect();

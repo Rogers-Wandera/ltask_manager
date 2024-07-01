@@ -18,9 +18,9 @@ class UserModel extends Model {
     try {
       this.columns.creationDate = format(new Date(), "yyyy-MM-dd HH:mm:ss");
       this.columns.id = this.getId();
-      // const hashed = await bcrypt.hash(this.columns.password, 15);
-      // console.log(hashed);
-      return "hello";
+      this.columns.password = bcrypt.hashSync(this.columns.password, 15);
+      this.columns.createdBy = this.columns.id;
+      return this.columns;
     } catch (error) {
       throw error;
     }
