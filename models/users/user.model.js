@@ -16,11 +16,16 @@ class UserModel extends Model {
 
   async CreateUser() {
     try {
+      const user = await this._viewOne({ email: this.columns.email });
+      if (user) {
+        throw new Error("The user with that email already exists");
+      }
       this.columns.creationDate = format(new Date(), "yyyy-MM-dd HH:mm:ss");
       this.columns.id = this.getId();
       this.columns.password = bcrypt.hashSync(this.columns.password, 15);
       this.columns.createdBy = this.columns.id;
-      return this.columns;
+      const response = await this._add();
+      return response;
     } catch (error) {
       throw error;
     }

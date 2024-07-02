@@ -46,23 +46,28 @@ class Connection {
   }
 
   async findOne(table, conditions = {}) {
-    let query = `SELECT *FROM ${table} WHERE `;
-    const keys = [];
-    const values = [];
-    if (Object.keys(conditions).length <= 0) {
-      throw new Error("Conditions are required");
+    try {
+      if (Object.keys(conditions).length <= 0) {
+        throw new Error("Conditions are required and must be an object");
+      }
+      let query = `Select *from ${table} WHERE `;
+      const keys = [];
+      const values = [];
+      Object.keys(conditions).forEach((key) => {
+        if (conditions[key] !== null) {
+          keys.push(key);
+          values.push(conditions[key]);
+        }
+      });
+      query += keys.map((key) => `${key}=?`).join(" AND ");
+      const [results] = await this.execute(query, values);
+      if (results.length > 0) {
+        return results[0];
+      }
+      return null;
+    } catch (error) {
+      throw error;
     }
-    Object.keys(conditions).forEach((key) => {
-      keys.push(key);
-      values.push(conditions[key]);
-    });
-    query += keys.map((key) => `${key} = ?`).join(" AND ");
-    console.log(query);
-    const [results] = await this.execute(query, values);
-    if (results.length > 0) {
-      return results[0];
-    }
-    return null;
   }
 }
 

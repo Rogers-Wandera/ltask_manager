@@ -20,7 +20,7 @@ class Model {
   async _update() {}
   async _view() {}
   async _viewOne(conditions = {}) {
-    return await this.db.findOne(this.table, conditions);
+    return this.db.findOne(this.table, conditions);
   }
   async runSql(sql, params = []) {}
 }
