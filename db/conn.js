@@ -59,7 +59,11 @@ class Connection {
           values.push(conditions[key]);
         }
       });
+      if (values.length <= 0) {
+        throw new Error("Where columns are empty");
+      }
       query += keys.map((key) => `${key}=?`).join(" AND ");
+      console.log(query);
       const [results] = await this.execute(query, values);
       if (results.length > 0) {
         return results[0];

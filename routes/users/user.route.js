@@ -5,5 +5,6 @@ const controller = new UserController();
 const router = express.Router();
 
 router.route("/").post((req, res) => controller.CreateUser(req, res));
+router.route("/login").post(controller.LoginUser);
 
 module.exports = router;

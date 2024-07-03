@@ -19,4 +19,22 @@ const CreateUserSchema = joi.object({
   }),
 });
 
-module.exports = { CreateUserSchema };
+const LoginSchema = joi.object({
+  email: joi.string().email().required().messages({
+    "string.base": "Email is required and should be a string",
+    "any.required": "Email is required",
+    "string.email": "Email should be a valid email",
+  }),
+  password: joi
+    .string()
+    .pattern(new RegExp(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[a-zA-Z\d]).{6,}$/))
+    .required()
+    .messages({
+      "string.base": "Password is required and should be a string",
+      "any.required": "Password is required",
+      "string.pattern.base":
+        "Password should be at least 6 characters long and should contain a number and a lowercase letter",
+    }),
+});
+
+module.exports = { CreateUserSchema, LoginSchema };
