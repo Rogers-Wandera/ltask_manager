@@ -42,6 +42,7 @@ class Connection {
     }
     query += keys.join(", ");
     query += `) VALUES (${keys.map(() => "?").join(", ")});`;
+    console.log(query);
     return { query, values };
   }
 
