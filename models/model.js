@@ -18,9 +18,20 @@ class Model {
   }
   async _delete() {}
   async _update() {}
-  async _view() {
+  async _view(conditions = {}) {
     let query = `SELECT *FROM ${this.table}`;
-    const [results] = await this.db.execute(query);
+    const keys = [];
+    const values = [];
+    if (Object.keys(conditions).length > 0) {
+      Object.keys(conditions).forEach((key) => {
+        if (conditions[key] !== null && conditions[key] !== undefined) {
+          keys.push(key);
+        }
+      });
+      query += " WHERE ";
+      query += keys.map((key) => `${key}=?`).join(" AND ");
+    }
+    const [results] = await this.db.execute(query, values);
     return results;
   }
   async _viewOne(conditions = {}) {

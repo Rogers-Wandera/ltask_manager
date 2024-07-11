@@ -19,7 +19,7 @@ class TaskModel extends Model {
   }
 
   async GetAllTasks() {
-    const tasks = await this._view();
+    const tasks = await this._view({ userId: this.columns.userId });
     return tasks;
   }
 }
