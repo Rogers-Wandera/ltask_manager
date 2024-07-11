@@ -30,5 +30,10 @@ class UserController {
       .status(200)
       .json({ msg: "User logged in successfully", token: response });
   };
+
+  GetUsers = async (req, res) => {
+    const users = await this.model.GetUsers();
+    res.status(200).json(users);
+  };
 }
 module.exports = UserController;

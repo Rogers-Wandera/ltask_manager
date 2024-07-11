@@ -15,6 +15,11 @@ class UserModel extends Model {
     return uuid();
   }
 
+  async GetUsers() {
+    const users = await this._view();
+    return users;
+  }
+
   async CreateUser() {
     try {
       const user = await this._viewOne({ email: this.columns.email });

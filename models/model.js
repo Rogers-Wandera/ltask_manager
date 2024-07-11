@@ -18,7 +18,11 @@ class Model {
   }
   async _delete() {}
   async _update() {}
-  async _view() {}
+  async _view() {
+    let query = `SELECT *FROM ${this.table}`;
+    const [results] = await this.db.execute(query);
+    return results;
+  }
   async _viewOne(conditions = {}) {
     return this.db.findOne(this.table, conditions);
   }

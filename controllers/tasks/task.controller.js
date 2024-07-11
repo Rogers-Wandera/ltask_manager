@@ -27,5 +27,10 @@ class TaskController {
     const response = await this.model.create();
     res.status(200).json({ msg: "hello", response });
   }
+
+  async GetTasks(req, res) {
+    const tasks = await this.model.GetAllTasks();
+    res.status(200).json(tasks);
+  }
 }
 module.exports = TaskController;

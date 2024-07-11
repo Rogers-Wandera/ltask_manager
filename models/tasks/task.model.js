@@ -17,6 +17,11 @@ class TaskModel extends Model {
       throw error;
     }
   }
+
+  async GetAllTasks() {
+    const tasks = await this._view();
+    return tasks;
+  }
 }
 
 module.exports = TaskModel;

@@ -4,6 +4,9 @@ const controller = new TaskController();
 
 const router = express.Router();
 
-router.route("/").post((req, res) => controller.CreateTask(req, res));
+router
+  .route("/")
+  .post((req, res) => controller.CreateTask(req, res))
+  .get((req, res) => controller.GetTasks(req, res));
 
 module.exports = router;
